@@ -7,6 +7,7 @@ const btnDown = document.querySelector('#down')
 
 let canvaSize;
 let elementSize;
+let level = 0;
 
 const playerPosition = {
     x: undefined,
@@ -32,13 +33,16 @@ function setCanvasSize() {
 
     elementSize = canvaSize / 10;
 
-    startGame();
+    startGame(level);
 }
 
-function startGame(level=0) {
+function startGame(level) {
     game.font = elementSize + 'px Verdana';
     game.textAlign = 'end';
     const map = maps[level];
+
+    if (!map) return
+
     const mapRows = map.trim().split('\n');
     const mapCols = mapRows.map(row => row.trim().split(''));
     
@@ -81,8 +85,8 @@ function movePLayer() {
     console.log({ giftCollisionX, giftCollisionY, giftCollision, giftPosition, playerPosition});
 
     if (giftCollision) {
-    console.log('Subiste de nivel!');
-    // startGame(1)
+        level++;
+        startGame(level)
     }
 
     const enemyCollision = enemiesPosition.find(enemy => {
@@ -130,23 +134,23 @@ function moveUp() {
     (playerPosition.y - elementSize) < 0
         ? console.log('out')
         : playerPosition.y -= elementSize
-        startGame()
+        startGame(level)
     }
 function moveLeft() {
     (playerPosition.x - elementSize) < elementSize
         ? console.log('out')
         : playerPosition.x -= elementSize
-        startGame()
+        startGame(level)
 }
 function moveRight() {
     (playerPosition.x + elementSize) > canvaSize
         ? console.log('out')
         : playerPosition.x += elementSize
-        startGame()
+        startGame(level)
 }
 function moveDown() {
     (playerPosition.y + elementSize) > canvaSize
         ? console.log('out')
         : playerPosition.y += elementSize
-        startGame()
+        startGame(level)
 }
