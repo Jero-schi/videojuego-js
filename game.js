@@ -8,6 +8,7 @@ const btnDown = document.querySelector('#down')
 let canvaSize;
 let elementSize;
 let level = 0;
+let lives = 3;
 
 const playerPosition = {
     x: undefined,
@@ -33,10 +34,10 @@ function setCanvasSize() {
 
     elementSize = canvaSize / 10;
 
-    startGame(level);
+    startGame();
 }
 
-function startGame(level) {
+function startGame() {
     game.font = elementSize + 'px Verdana';
     game.textAlign = 'end';
     const map = maps[level];
@@ -82,11 +83,9 @@ function movePLayer() {
     const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
     const giftCollision = giftCollisionX && giftCollisionY;
 
-    console.log({ giftCollisionX, giftCollisionY, giftCollision, giftPosition, playerPosition});
-
     if (giftCollision) {
         level++;
-        startGame(level)
+        startGame()
     }
 
     const enemyCollision = enemiesPosition.find(enemy => {
@@ -97,6 +96,16 @@ function movePLayer() {
 
     if (enemyCollision) {
         console.log('chocaste');
+        lives--;
+        console.log(lives);
+
+        if (lives <= 0) {
+            level = 0;
+            lives = 3;
+        }
+        playerPosition.x = undefined;
+        playerPosition.y = undefined;
+        startGame()
     }
 
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
@@ -134,23 +143,23 @@ function moveUp() {
     (playerPosition.y - elementSize) < 0
         ? console.log('out')
         : playerPosition.y -= elementSize
-        startGame(level)
+        startGame()
     }
 function moveLeft() {
     (playerPosition.x - elementSize) < elementSize
         ? console.log('out')
         : playerPosition.x -= elementSize
-        startGame(level)
+        startGame()
 }
 function moveRight() {
     (playerPosition.x + elementSize) > canvaSize
         ? console.log('out')
         : playerPosition.x += elementSize
-        startGame(level)
+        startGame()
 }
 function moveDown() {
     (playerPosition.y + elementSize) > canvaSize
         ? console.log('out')
         : playerPosition.y += elementSize
-        startGame(level)
+        startGame()
 }
