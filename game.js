@@ -4,6 +4,7 @@ const btnUp = document.querySelector('#up')
 const btnLeft = document.querySelector('#left')
 const btnRight = document.querySelector('#right')
 const btnDown = document.querySelector('#down')
+const spanLives = document.querySelector('#lives')
 
 let canvaSize;
 let elementSize;
@@ -43,6 +44,8 @@ function startGame() {
     const map = maps[level];
 
     if (!map) return
+
+    showLives()
 
     const mapRows = map.trim().split('\n');
     const mapCols = mapRows.map(row => row.trim().split(''));
@@ -109,6 +112,10 @@ function movePLayer() {
     }
 
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
+}
+
+function showLives() {
+    spanLives.innerHTML = '🧡'.repeat(lives)
 }
 
 window.addEventListener('keydown', moves)
