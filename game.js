@@ -62,7 +62,7 @@ function startGame() {
     
     if (!timeStar) {
         timeStar = Date.now()
-        // timeInterval = setInterval(showTime, 200)
+        timeInterval = setInterval(showTime, 200)
         showRecord()
     }
 
