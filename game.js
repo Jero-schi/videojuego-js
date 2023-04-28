@@ -34,14 +34,18 @@ window.addEventListener('resize', setCanvasSize);
 
 function setCanvasSize() { 
     window.innerHeight > window.innerWidth
-        ? canvaSize = window.innerWidth * 0.8
-        : canvaSize = window.innerHeight * 0.8
+        ? canvaSize = window.innerWidth * 0.7
+        : canvaSize = window.innerHeight * 0.7
+
+    canvaSize = Number(canvaSize.toFixed(0))
 
     canva.setAttribute('width', canvaSize);
     canva.setAttribute('height', canvaSize);
 
-    elementSize = canvaSize / 10;
+    elementSize = (canvaSize / 10) -1 ;
 
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
     startGame();
 }
 
@@ -58,7 +62,7 @@ function startGame() {
     
     if (!timeStar) {
         timeStar = Date.now()
-        timeInterval = setInterval(showTime, 200)
+        // timeInterval = setInterval(showTime, 200)
         showRecord()
     }
 
@@ -73,14 +77,13 @@ function startGame() {
     mapCols.forEach((row, rowI) => {
         row.forEach((col, colI) => {
             const emoji = emojis[col];
-            const posX = elementSize * (colI + 1);
+            const posX = elementSize * (colI+ 1.3);
             const posY = elementSize * (rowI + 1);
 
             if (col == 'O') {
                 if (!playerPosition.x && !playerPosition.y) {
                     playerPosition.x = posX;
                     playerPosition.y = posY;
-                    console.log({playerPosition});
                 }
             } else if (col == 'I') {
                 giftPosition.x = posX
