@@ -5,11 +5,16 @@ const btnLeft = document.querySelector('#left')
 const btnRight = document.querySelector('#right')
 const btnDown = document.querySelector('#down')
 const spanLives = document.querySelector('#lives')
+const spanTime = document.querySelector('#time')
 
 let canvaSize;
 let elementSize;
 let level = 0;
 let lives = 3;
+
+let timeStar;
+let timePlayer;
+let timeInterval;
 
 const playerPosition = {
     x: undefined,
@@ -43,7 +48,15 @@ function startGame() {
     game.textAlign = 'end';
     const map = maps[level];
 
-    if (!map) return
+    if (!map) {
+        clearInterval(timeInterval)
+        return
+    }
+
+    if (!timeStar) {
+        timeStar = Date.now()
+        timeInterval = setInterval(showTime, 200)
+    }
 
     showLives()
 
@@ -105,6 +118,7 @@ function movePLayer() {
         if (lives <= 0) {
             level = 0;
             lives = 3;
+            timeStar = undefined
         }
         playerPosition.x = undefined;
         playerPosition.y = undefined;
@@ -116,6 +130,10 @@ function movePLayer() {
 
 function showLives() {
     spanLives.innerHTML = '🧡'.repeat(lives)
+}
+
+function showTime() {
+    spanTime.innerHTML = + ((Date.now() - timeStar) / 1000)
 }
 
 window.addEventListener('keydown', moves)
