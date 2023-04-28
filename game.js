@@ -6,6 +6,8 @@ const btnRight = document.querySelector('#right')
 const btnDown = document.querySelector('#down')
 const spanLives = document.querySelector('#lives')
 const spanTime = document.querySelector('#time')
+const spanRecord = document.querySelector('#record')
+const pResult = document.querySelector('#result')
 
 let canvaSize;
 let elementSize;
@@ -47,15 +49,17 @@ function startGame() {
     game.font = elementSize + 'px Verdana';
     game.textAlign = 'end';
     const map = maps[level];
-
+    
     if (!map) {
         clearInterval(timeInterval)
+        newRecord()
         return
     }
-
+    
     if (!timeStar) {
         timeStar = Date.now()
         timeInterval = setInterval(showTime, 200)
+        showRecord()
     }
 
     showLives()
@@ -128,12 +132,34 @@ function movePLayer() {
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
 }
 
+function newRecord() {
+    timePlayer = Date.now() - timeStar
+    const record = localStorage.getItem('record')
+
+    if (record) {
+        if (timePlayer < record) {
+            localStorage.setItem('record', timePlayer)
+            pResult.innerHTML = 'Superaste el record';
+        } else {
+            pResult.innerHTML = 'No superaste el record';
+        }
+    } else {
+        localStorage.setItem('record', timePlayer)
+        pResult.innerHTML = 'Haz un nuevo record';
+    }
+}
+
 function showLives() {
     spanLives.innerHTML = '🧡'.repeat(lives)
 }
 
-function showTime() {
-    spanTime.innerHTML = + ((Date.now() - timeStar) / 1000)
+function showTime() {  
+    spanTime.innerHTML = Date.now() - timeStar
+}
+
+function showRecord() {
+    spanRecord.innerHTML = localStorage.getItem('record')
+
 }
 
 window.addEventListener('keydown', moves)
