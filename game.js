@@ -1,3 +1,4 @@
+const container = document.querySelector('.game-container');
 const canva = document.querySelector('#game');
 const game = canva.getContext('2d');
 const btnUp = document.querySelector('#up')
@@ -8,6 +9,9 @@ const spanLives = document.querySelector('#lives')
 const spanTime = document.querySelector('#time')
 const spanRecord = document.querySelector('#record')
 const pResult = document.querySelector('#result')
+const divReinicio = document.querySelector('#reinicio')
+const btnSi = document.querySelector('#btnSi')
+const btnNo = document.querySelector('#btnNo')
 
 let canvaSize;
 let elementSize;
@@ -57,6 +61,7 @@ function startGame() {
     if (!map) {
         clearInterval(timeInterval)
         newRecord()
+        seguirJugando()
         return
     }
     
@@ -118,9 +123,7 @@ function movePLayer() {
     })
 
     if (enemyCollision) {
-        console.log('chocaste');
         lives--;
-        console.log(lives);
 
         if (lives <= 0) {
             level = 0;
@@ -152,6 +155,25 @@ function newRecord() {
     }
 }
 
+function seguirJugando() {
+    divReinicio.classList.remove('inactive')
+    container.classList.add('opacity')
+
+    btnSi.addEventListener('click', () => {
+        divReinicio.classList.add('inactive')
+        container.classList.remove('opacity')
+        level = 0;
+        lives = 3;
+        timeStar = undefined
+        startGame()
+    })
+
+    btnNo.addEventListener('click', () => {
+        divReinicio.classList.add('inactive')
+        container.classList.remove('opacity')
+    })
+}
+
 function showLives() {
     spanLives.innerHTML = '🧡'.repeat(lives)
 }
@@ -162,7 +184,6 @@ function showTime() {
 
 function showRecord() {
     spanRecord.innerHTML = localStorage.getItem('record')
-
 }
 
 window.addEventListener('keydown', moves)
