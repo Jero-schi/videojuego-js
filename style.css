@@ -73,7 +73,7 @@
   #reinicio {
     width: 40vw;
     min-width: 300px;
-    height: 30vh;
+    height: 40vh;
     padding: 12px;
     border-radius: 8px;
     border: 4px solid #ff6600;
@@ -109,6 +109,26 @@
     width: 14vw;
     text-align: center;
     padding: 5px 0;
+  }
+
+  #reinicio #btnSi {
+    background-color: green;
+    border: 4px solid rgb(8, 169, 8);
+    border-style: outset;
+    color: #feff9d;
+  }
+
+  #reinicio #btnNo {
+    background-color: red;
+    border: 4px solid red;
+    border-style: outset;
+    color: #feff9d;
+  }
+
+  #result {
+    margin-top: 12px;
+    color: indigo;
+    text-align: center;
   }
   
   @media (max-width: 440px) {

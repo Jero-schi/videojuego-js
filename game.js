@@ -126,9 +126,7 @@ function movePLayer() {
         lives--;
 
         if (lives <= 0) {
-            level = 0;
-            lives = 3;
-            timeStar = undefined
+            seguirJugando()
         }
         playerPosition.x = undefined;
         playerPosition.y = undefined;
@@ -145,9 +143,9 @@ function newRecord() {
     if (record) {
         if (timePlayer < record) {
             localStorage.setItem('record', timePlayer)
-            pResult.innerHTML = 'Superaste el record';
+            pResult.innerHTML = 'Superaste tu record🥳';
         } else {
-            pResult.innerHTML = 'No superaste el record';
+            pResult.innerHTML = 'No superaste tu record🫤';
         }
     } else {
         localStorage.setItem('record', timePlayer)
@@ -156,6 +154,7 @@ function newRecord() {
 }
 
 function seguirJugando() {
+    clearInterval(timeInterval)
     divReinicio.classList.remove('inactive')
     container.classList.add('opacity')
 
@@ -165,6 +164,7 @@ function seguirJugando() {
         level = 0;
         lives = 3;
         timeStar = undefined
+        pResult.innerHTML = 'Intenta superar tu record';
         startGame()
     })
 
