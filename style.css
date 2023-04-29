@@ -58,9 +58,12 @@
   .messages {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
+    margin: 0 ;
+    padding: 8px;
     width: 80%;
     max-width: 460px;
+    background-color: rgba(0, 0, 0, 0.59);
+    border-radius: 4px;
   }
   
   p {
