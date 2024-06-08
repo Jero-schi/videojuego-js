@@ -1,3 +1,5 @@
+
+
 const container = document.querySelector('.game-container');
 const canva = document.querySelector('#game');
 const game = canva.getContext('2d');
@@ -66,8 +68,8 @@ function startGame() {
     }
     
     if (!timeStar) {
-        timeStar = Date.now()
-        timeInterval = setInterval(showTime, 200)
+        // timeStar = Date.now()
+        // timeInterval = setInterval(showTime, 200)
         showRecord()
     }
 
@@ -81,9 +83,11 @@ function startGame() {
 
     mapCols.forEach((row, rowI) => {
         row.forEach((col, colI) => {
-            const emoji = emojis[col];
+            // console.log({col, row});
+            const emoji = emojisMap[level][col];
             const posX = elementSize * (colI+ 1.3);
             const posY = elementSize * (rowI + 1);
+
 
             if (col == 'O') {
                 if (!playerPosition.x && !playerPosition.y) {
@@ -110,19 +114,44 @@ function movePLayer() {
     const giftCollisionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
     const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
     const giftCollision = giftCollisionX && giftCollisionY;
+    const distanciaTrampa = elementSize * 2
+
+    // if (level == 2) {
+    //     console.log(playerPosition);
+    //     console.log(giftPosition);
+    //     console.log(elementSize);
+    //     console.log(giftPosition.x - distanciaTrampa);
+    //     if (playerPosition.y == giftPosition.y) {
+    //         console.log('Ys iguales');
+    //     }
+    // }
+
+    if (level==2 && 
+    playerPosition.y.toFixed(2) == giftPosition.y.toFixed(2) && 
+    playerPosition.x.toFixed(2) == giftPosition.x.toFixed(2) - distanciaTrampa) {
+            console.log('kbum🏴‍☠️🏴‍☠️');
+            level++;
+            lives++
+            
+            startGame()
+    }
 
     if (giftCollision) {
         level++;
+        if (level !== 4) {
+            lives++
+        }
         startGame()
     }
-
+    
     const enemyCollision = enemiesPosition.find(enemy => {
-        const enemyCollisionX = enemy.x.toFixed(3) == playerPosition.x.toFixed(3);
-        const enemyCollisionY = enemy.y.toFixed(3) == playerPosition.y.toFixed(3);
+        const enemyCollisionX = enemy.x.toFixed(2) == playerPosition.x.toFixed(2);
+        const enemyCollisionY = enemy.y.toFixed(2) == playerPosition.y.toFixed(2);
         return enemyCollisionX && enemyCollisionY
     })
-
+    
     if (enemyCollision) {
+        console.log('colision');
         lives--;
 
         if (lives <= 0) {
